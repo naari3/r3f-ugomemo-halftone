@@ -1,3 +1,3 @@
 export const publicPath = (path: string) => {
-	return process.env.PUBLIC_URL + path
+	return new URL(path, "http://localhost/"+import.meta.env.BASE_URL).pathname
 }

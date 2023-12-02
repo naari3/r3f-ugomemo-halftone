@@ -1,4 +1,4 @@
-import React, { useState, VFC } from 'react';
+import React, { VFC, useState } from 'react';
 
 type LinkIconButtonProps = {
 	/**
@@ -24,7 +24,7 @@ export const LinkIconButton: VFC<LinkIconButtonProps> = props => {
 	const { imagePath, linkPath, position = 'bottom-right', size = [50, 50] } = props
 	const [hover, setHover] = useState(false)
 
-	const publicImagePath = process.env.PUBLIC_URL + imagePath
+	const publicImagePath = new URL(imagePath, "http://localhost/"+import.meta.env.BASE_URL).pathname
 
 	let positionStyle
 	switch (position) {
