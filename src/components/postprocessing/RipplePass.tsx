@@ -1,60 +1,70 @@
-import React, { Suspense, useEffect, useMemo, useRef, VFC } from 'react';
-import { ShaderPass } from 'three-stdlib';
-import { useTexture } from '@react-three/drei';
-import { extend, useFrame } from '@react-three/fiber';
-import { publicPath } from '../../utils/file';
-import { RippleRenderer } from './ripple';
+import React, { Suspense, useEffect, useMemo, useRef, VFC } from "react";
+import { ShaderPass } from "three-stdlib";
+import { useTexture } from "@react-three/drei";
+import { extend, useFrame } from "@react-three/fiber";
+import { publicPath } from "../../utils/file";
+import { RippleRenderer } from "./ripple";
 
-extend({ ShaderPass })
+extend({ ShaderPass });
 
 type RipplePassType = {
-	enabled?: boolean
-}
+	enabled?: boolean;
+};
 
-export const RipplePass: VFC<RipplePassType> = props => {
-	const { enabled = true } = props
+export const RipplePass: VFC<RipplePassType> = (props) => {
+	const { enabled = true } = props;
 
 	return (
 		<Suspense fallback={null}>
 			<Ripple enabled={enabled} />
 		</Suspense>
-	)
-}
+	);
+};
 
 // ========================================================
 type RippleType = {
-	enabled?: boolean
-}
+	enabled?: boolean;
+};
 
-const Ripple: VFC<RippleType> = props => {
-	const { enabled = true } = props
+const Ripple: VFC<RippleType> = (props) => {
+	const { enabled = true } = props;
 
-	const shaderRef = useRef<ShaderPass>(null)
+	const shaderRef = useRef<ShaderPass>(null);
 
-	const rippleTexture = useTexture(publicPath('/assets/textures/brush.png'))
-	const effect = useMemo(() => new RippleRenderer(rippleTexture), [rippleTexture])
+	const rippleTexture = useTexture(publicPath("/assets/textures/brush.png"));
+	const effect = useMemo(
+		() => new RippleRenderer(rippleTexture),
+		[rippleTexture],
+	);
 
 	const shader: THREE.Shader = useMemo(() => {
 		return {
 			uniforms: {
 				tDiffuse: { value: null },
-				u_displacement: { value: null }
+				u_displacement: { value: null },
 			},
 			vertexShader: vertexShader,
-			fragmentShader: fragmentShader
-		}
-	}, [])
+			fragmentShader: fragmentShader,
+		};
+	}, []);
 
 	useEffect(() => {
-		return () => effect.dispose()
-	}, [effect])
+		return () => effect.dispose();
+	}, [effect]);
 
 	useFrame(({ gl }) => {
-		effect.update(gl, shaderRef.current!.uniforms.u_displacement)
-	})
+		effect.update(gl, shaderRef.current!.uniforms.u_displacement);
+	});
 
-	return <shaderPass ref={shaderRef} attachArray="passes" args={[shader]} enabled={enabled} />
-}
+	return (
+		<shaderPass
+			ref={shaderRef}
+			attachArray="passes"
+			args={[shader]}
+			enabled={enabled}
+		/>
+	);
+};
 
 // --------------------------------------------------------
 const vertexShader = `
@@ -64,7 +74,7 @@ void main() {
   v_uv = uv;
   gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
 }
-`
+`;
 
 const fragmentShader = `
 uniform sampler2D tDiffuse;
@@ -86,4 +96,4 @@ void main() {
   gl_FragColor = color;
   // gl_FragColor = texture2D(u_displacement, v_uv);
 }
-`
+`;

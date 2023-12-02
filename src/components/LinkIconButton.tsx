@@ -1,44 +1,52 @@
-import React, { VFC, useState } from 'react';
+import React, { VFC, useState } from "react";
 
 type LinkIconButtonProps = {
 	/**
 	 * Resource path directly under the public folder.
 	 * @example '/assets/icons/github.svg'
 	 */
-	imagePath: string
+	imagePath: string;
 	/**
 	 * @example 'https://github.com'
 	 */
-	linkPath: string
+	linkPath: string;
 	/**
 	 * @default 'bottom-right'
 	 */
-	position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+	position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
 	/**
 	 * @default [50, 50] - width:50px, height:50px
 	 */
-	size?: [number, number]
-}
+	size?: [number, number];
+};
 
-export const LinkIconButton: VFC<LinkIconButtonProps> = props => {
-	const { imagePath, linkPath, position = 'bottom-right', size = [50, 50] } = props
-	const [hover, setHover] = useState(false)
+export const LinkIconButton: VFC<LinkIconButtonProps> = (props) => {
+	const {
+		imagePath,
+		linkPath,
+		position = "bottom-right",
+		size = [50, 50],
+	} = props;
+	const [hover, setHover] = useState(false);
 
-	const publicImagePath = new URL(imagePath, "http://localhost/"+import.meta.env.BASE_URL).pathname
+	const publicImagePath = new URL(
+		imagePath,
+		`http://localhost/${import.meta.env.BASE_URL}`,
+	).pathname;
 
-	let positionStyle
+	let positionStyle;
 	switch (position) {
-		case 'top-left':
-			positionStyle = styles.topLeft
-			break
-		case 'top-right':
-			positionStyle = styles.topRight
-			break
-		case 'bottom-left':
-			positionStyle = styles.bottomLeft
-			break
+		case "top-left":
+			positionStyle = styles.topLeft;
+			break;
+		case "top-right":
+			positionStyle = styles.topRight;
+			break;
+		case "bottom-left":
+			positionStyle = styles.bottomLeft;
+			break;
 		default:
-			positionStyle = styles.bottomRight
+			positionStyle = styles.bottomRight;
 	}
 
 	return (
@@ -48,57 +56,64 @@ export const LinkIconButton: VFC<LinkIconButtonProps> = props => {
 			target="_blank"
 			rel="noreferrer noopener"
 			onMouseEnter={() => setHover(true)}
-			onMouseLeave={() => setHover(false)}>
-			<img style={hover ? hoverStyles.img : styles.img} src={publicImagePath} alt="" width={size[0]} height={size[1]} />
+			onMouseLeave={() => setHover(false)}
+		>
+			<img
+				style={hover ? hoverStyles.img : styles.img}
+				src={publicImagePath}
+				alt=""
+				width={size[0]}
+				height={size[1]}
+			/>
 		</a>
-	)
-}
+	);
+};
 
 // ========================================================
 // styles
 
-type Styles = { [key in string]: React.CSSProperties }
+type Styles = { [key in string]: React.CSSProperties };
 
 const temp: Styles = {
 	container: {
-		position: 'absolute',
-		fontSize: '0'
-	}
-}
+		position: "absolute",
+		fontSize: "0",
+	},
+};
 
 const styles: Styles = {
 	topLeft: {
 		...temp.container,
-		top: '10px',
-		left: '10px'
+		top: "10px",
+		left: "10px",
 	},
 	topRight: {
 		...temp.container,
-		top: '10px',
-		right: '10px'
+		top: "10px",
+		right: "10px",
 	},
 	bottomLeft: {
 		...temp.container,
-		bottom: '10px',
-		left: '10px'
+		bottom: "10px",
+		left: "10px",
 	},
 	bottomRight: {
 		...temp.container,
-		bottom: '10px',
-		right: '10px'
+		bottom: "10px",
+		right: "10px",
 	},
 	img: {
-		objectFit: 'cover',
-		opacity: '0.5',
-		transform: 'rotate(0deg)',
-		transition: 'all 0.3s'
-	}
-}
+		objectFit: "cover",
+		opacity: "0.5",
+		transform: "rotate(0deg)",
+		transition: "all 0.3s",
+	},
+};
 
 const hoverStyles: Styles = {
 	img: {
 		...styles.img,
-		opacity: '1',
-		transform: 'rotate(360deg)'
-	}
-}
+		opacity: "1",
+		transform: "rotate(360deg)",
+	},
+};

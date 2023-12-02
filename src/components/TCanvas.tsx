@@ -1,8 +1,8 @@
-import React, { Suspense, VFC } from 'react';
-import { OrbitControls, Stats } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-import { Effect } from './Effect';
-import { ImagePlane } from './ImagePlane';
+import React, { Suspense, VFC } from "react";
+import { OrbitControls, Stats } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { Effect } from "./Effect";
+import { ImagePlane } from "./ImagePlane";
 
 export const TCanvas: VFC = () => {
 	return (
@@ -12,11 +12,12 @@ export const TCanvas: VFC = () => {
 				fov: 50,
 				aspect: window.innerWidth / window.innerHeight,
 				near: 0.1,
-				far: 2000
+				far: 2000,
 			}}
-			dpr={window.devicePixelRatio}>
+			dpr={window.devicePixelRatio}
+		>
 			{/* canvas color */}
-			<color attach="background" args={['#000']} />
+			<color attach="background" args={["#000"]} />
 			{/* camera controller */}
 			<OrbitControls attach="orbitControls" />
 			{/* helper */}
@@ -28,5 +29,5 @@ export const TCanvas: VFC = () => {
 			{/* effect */}
 			<Effect />
 		</Canvas>
-	)
-}
+	);
+};

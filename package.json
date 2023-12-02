@@ -24,7 +24,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "deploy": "pnpm run build && gh-pages -d build"
+    "deploy": "pnpm run build && gh-pages -d build",
+    "lint": "biome lint .",
+    "format": "biome format . --write"
   },
   "eslintConfig": {
     "extends": [
@@ -45,6 +47,7 @@
     ]
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.4.1",
     "@types/three": "^0.135.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "gh-pages": "^3.2.3",

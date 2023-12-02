@@ -1,19 +1,19 @@
-import { useMemo, useRef, VFC } from 'react';
-import { ShaderPass } from 'three-stdlib';
-import { extend, useFrame } from '@react-three/fiber';
+import { extend, useFrame } from "@react-three/fiber";
+import { VFC, useMemo, useRef } from "react";
+import { ShaderPass } from "three-stdlib";
 
-extend({ ShaderPass })
+extend({ ShaderPass });
 
 type DistortionPassType = {
-	enabled?: boolean
-	progress?: number
-	scale?: number
-}
+	enabled?: boolean;
+	progress?: number;
+	scale?: number;
+};
 
-export const DistortionPass: VFC<DistortionPassType> = props => {
-	const { enabled = true, progress = 0, scale = 1 } = props
+export const DistortionPass: VFC<DistortionPassType> = (props) => {
+	const { enabled = true, progress = 0, scale = 1 } = props;
 
-	const distortionRef = useRef<ShaderPass>(null)
+	const distortionRef = useRef<ShaderPass>(null);
 
 	const shader: THREE.Shader = useMemo(() => {
 		return {
@@ -21,16 +21,16 @@ export const DistortionPass: VFC<DistortionPassType> = props => {
 				tDiffuse: { value: null },
 				u_time: { value: 0 },
 				u_progress: { value: 0 },
-				u_scale: { value: 1 }
+				u_scale: { value: 1 },
 			},
 			vertexShader: vertexShader,
-			fragmentShader: fragmentShader
-		}
-	}, [])
+			fragmentShader: fragmentShader,
+		};
+	}, []);
 
 	useFrame(() => {
-		distortionRef.current!.uniforms.u_time.value += 0.01
-	})
+		distortionRef.current!.uniforms.u_time.value += 0.01;
+	});
 
 	return (
 		<shaderPass
@@ -41,8 +41,8 @@ export const DistortionPass: VFC<DistortionPassType> = props => {
 			uniforms-u_progress-value={progress}
 			uniforms-u_scale-value={scale}
 		/>
-	)
-}
+	);
+};
 
 // --------------------------------------------------------
 const vertexShader = `
@@ -52,7 +52,7 @@ void main() {
   v_uv = uv;
   gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
 }
-`
+`;
 
 const fragmentShader = `
 uniform sampler2D tDiffuse;
@@ -78,4 +78,4 @@ void main() {
   gl_FragColor = color;
   // gl_FragColor = vec4(vec3(length(p)), 1.0);
 }
-`
+`;
