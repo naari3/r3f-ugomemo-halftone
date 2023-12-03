@@ -26,7 +26,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "deploy": "pnpm run build && gh-pages -d build",
+    "deploy": "GITHUB_PAGES=true pnpm run build && gh-pages -d dist",
     "lint": "biome lint .",
     "format": "biome format . --write"
   },
