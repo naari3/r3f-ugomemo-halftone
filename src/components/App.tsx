@@ -8,7 +8,7 @@ export const App: VFC = () => {
 			<TCanvas />
 			<LinkIconButton
 				imagePath="/assets/icons/github.svg"
-				linkPath="https://github.com/nemutas/r3f-homunculus"
+				linkPath="https://github.com/naari3/r3f-ugomemo-halftone"
 			/>
 		</div>
 	);

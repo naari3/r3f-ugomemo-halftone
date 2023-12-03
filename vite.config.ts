@@ -3,6 +3,6 @@ import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	base: "/",
+	base: process.env.GITHUB_PAGES ? "/r3f-ugomemo-halftone" : "/",
 	plugins: [react()],
 });
