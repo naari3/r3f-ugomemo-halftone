@@ -30,8 +30,8 @@ export const LinkIconButton: VFC<LinkIconButtonProps> = (props) => {
 	const [hover, setHover] = useState(false);
 
 	const publicImagePath = new URL(
-		imagePath,
-		`http://localhost/${import.meta.env.BASE_URL}`,
+		`${import.meta.env.BASE_URL}${imagePath}`,
+		"http://localhost",
 	).pathname;
 
 	let positionStyle;
