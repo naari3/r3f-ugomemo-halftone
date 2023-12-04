@@ -1,4 +1,5 @@
 import React, { VFC, useState } from "react";
+import urlJoin from "url-join";
 
 type LinkIconButtonProps = {
 	/**
@@ -29,10 +30,7 @@ export const LinkIconButton: VFC<LinkIconButtonProps> = (props) => {
 	} = props;
 	const [hover, setHover] = useState(false);
 
-	const publicImagePath = new URL(
-		`${import.meta.env.BASE_URL}${imagePath}`,
-		"http://localhost",
-	).pathname;
+	const publicImagePath = urlJoin(import.meta.env.BASE_URL, imagePath);
 
 	let positionStyle;
 	switch (position) {
